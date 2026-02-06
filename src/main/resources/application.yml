@@ -13,7 +13,6 @@ management:
       exposure:
         include:
           - health
-    name: sample-microservice-server
 #eureka:
 #  client:
  #   register-with-eureka: true
