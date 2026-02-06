@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: microser
+  labels:
+    appName: microser
+    appVersion: "1.0"
+    env: production
+  annotations:
+    license: Apache GNU Public License2
+    description: Hangout application provides travel guide  
+spec:
+  containers:
+    - name: microser
+      image: microser:1.0
+      ports:
+        - name: microserport
+          containerPort: 8080
+          protocol: TCP
+      readinessProbe:
+        httpGet:
+          path: /sample/actuator/health/readiness
+          port: 8080
+        initialDelaySeconds: 30
+        timeoutSeconds: 30
+        failureThreshold: 3
+      livenessProbe:
+        httpGet:
+          path: /sample/actuator/health/liveness
+          port: 8080
+        initialDelaySeconds: 30
+        timeoutSeconds: 30
+        failureThreshold: 3
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "512Mi"
+        limits:
+          cpu: "1000m"
+          memory: "1024Mi"
